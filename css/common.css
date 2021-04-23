@@ -1,74 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+
 :root {
-  --color-black: #203040;
-  --color-white: #ecf0f1;
-  --color-primary: #2ecc71;
-  --color-secondary: #27ae60;
+  --color-black: rgb(13, 17, 54);
+  --color-gray: rgb(119, 121, 140);
+  --color-gray-light: rgb(247, 247, 247);
+  --color-white: rgba(255, 255, 255);
+  --color-primary: rgb(0, 158, 127);
+  --color-secondary: rgb(0, 102, 82);
 
   --font-size-s: 12px;
   --font-size-m: 14px;
   --font-size-l: 18px;
+  --font-size-xl: 24px;
 
-  --border-radius: 8px;
+  --font-weight-normal: 400;
+  --font-weight-semi: 500;
+  --font-weight-bold: 700;
 
-  --box-shadow: 0 5px 10px -5px;
-  --box-shadow-hard: rgba(44, 62, 80, 0.2);
-  --box-shadow-soft: rgba(44, 62, 80, 0.02);
+  --border-radius: 6px;
+
+  --box-shadow: 0px 21px 36px rgb(0 0 0 / 5%);
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-size: 15px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: var(--color-white);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+p,
+a,
+button,
+input {
+  font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+button,
+input,
+p,
+button,
+input,
+form {
+  line-height: 1.25em;
+  color: var(--color-black);
+  letter-spacing: 0.3px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 1.25em;
+  color: var(--color-black);
+  letter-spacing: -1px;
+}
+
+img {
+  display: block;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 94%;
 }
 
 /** Pre ready classes */
+
+.font-s {
+  font-size: var(--font-size-s);
+}
+
+.font-m {
+  font-size: var(--font-size-m);
+}
+
+.font-l {
+  font-size: var(--font-size-l);
+}
+
+.font-xl {
+  font-size: var(--font-size-xl);
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
+.font-normal {
+  font-weight: 400;
+}
 
 .d-flex {
   display: flex;
 }
 
-.flex-column {
+.f-column {
   flex-direction: column;
 }
 
-.flex-row {
+.f-row {
   flex-direction: row;
 }
 
-.justify-content-center {
+.justify-center {
   justify-content: center;
 }
 
-.justify-content-between {
+.justify-between {
   justify-content: space-between;
 }
 
-.justify-content-start {
+.justify-start {
   justify-content: flex-start;
 }
 
-.justify-content-end {
+.justify-end {
   justify-content: flex-end;
 }
 
-.align-items-center {
+.align-center {
   align-items: center;
 }
 
-.align-items-between {
+.align-between {
   align-items: space-between;
 }
 
-.align-items-start {
+.align-start {
   align-items: flex-start;
 }
 
-.align-items-end {
+.align-end {
   align-items: flex-end;
+}
+
+.align-stretch {
+  align-items: stretch;
+}
+
+.mr-1 {
+  margin-right: 4px;
+}
+
+.mr-2 {
+  margin-right: 6px;
+}
+
+.mr-3 {
+  margin-right: 8px;
+}
+
+.ml-1 {
+  margin-left: 4px;
+}
+
+.mt-1 {
+  margin-top: 4px;
+}
+
+.mt-3 {
+  margin-top: 8px;
+}
+
+.mb-1 {
+  margin-bottom: 4px;
+}
+
+.mb-2 {
+  margin-bottom: 6px;
+}
+
+.mb-3 {
+  margin-bottom: 8px;
 }
 
 .mx-1 {
@@ -109,4 +233,76 @@ body {
 .py-2 {
   padding-top: 8px;
   padding-bottom: 8px;
+}
+
+.opacity-8 {
+  opacity: 0.8;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: var(--font-weight-bold);
+}
+
+h2 {
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+}
+
+h3 {
+  font-size: 20px;
+  font-weight: var(--font-weight-semi);
+}
+
+h4 {
+  font-size: 18px;
+}
+
+h5 {
+  font-size: 16px;
+}
+
+.input {
+  font-size: 1rem;
+  border: 0;
+  outline: none;
+  border-radius: var(--border-radius);
+  color: var(--color-black);
+}
+
+.input::placeholder {
+  color: var(--color-gray);
+  opacity: 0.8;
+}
+
+.button {
+  cursor: pointer;
+  font-size: 0.9rem;
+  outline: none;
+  appearance: none;
+  border: 0;
+  border-radius: var(--border-radius);
+  padding: 0.5rem 0.8rem;
+  background-color: var(--color-gray-light);
+}
+
+.button i {
+  margin-right: 0.3rem;
+}
+
+.button-primary {
+  color: var(--color-white);
+  background-color: var(--color-primary);
+}
+
+.button-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--border-radius);
+}
+
+.button-transparent {
+  padding: 0;
+  background-color: transparent;
 }

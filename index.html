@@ -6,10 +6,130 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pure E-commerce</title>
 
-    <!-- Normalize CSS -->
-    <link rel="stylesheet" href="./css/normalize.css" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+
+    <!-- Reset CSS -->
+    <link rel="stylesheet" href="./css/reset.css" />
+    <!-- Common CSS -->
+    <link rel="stylesheet" href="./css/common.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./css/custom.css" />
+    <!-- Main Js -->
+    <script src="./js/main.js" defer type="module"></script>
   </head>
   <body>
-    Asd
+    <header>
+      <div class="container d-flex align-center justify-between">
+        <div class="logo d-flex align-center">
+          <p class="ml-1 font-xl font-bold">CENG 3502</p>
+        </div>
+        <div class="menu-wrapper">
+          <div class="menu d-flex justify-between align-center">
+            <div class="menu-item">
+              <button class="button button-transparent">
+                <i class="fas fa-plus"></i>
+                Add New Product
+              </button>
+            </div>
+            <div class="menu-item">
+              <button class="button button-transparent">
+                <i class="fas fa-heart"></i>
+                Wishlist
+              </button>
+            </div>
+            <div class="menu-item">
+              <button class="button button-primary" id="basket-open-button">
+                <i class="fas fa-shopping-cart"></i>
+                Basket
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="hero-wrapper">
+      <div class="container">
+        <div class="hero-relative d-flex f-column align-center justify-center">
+          <div class="hero-slogan-wrapper">
+            <h1 class="slogan-title">Your own books store</h1>
+            <h4 class="slogan-description">
+              Get your favorite books from our wide range of books.
+            </h4>
+          </div>
+          <div class="hero-search d-flex align-stretch justify-between">
+            <input
+              class="search-input input"
+              placeholder="Search your products from here..."
+            />
+            <button class="search-button button button-primary">
+              <i class="fas fa-search"></i>
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <main class="d-flex">
+      <nav>
+        <div class="categories-wrapper d-flex f-column">
+          <a href="#products" class="category-link d-flex align-center">
+            <div class="category-link-inner">
+              <i class="fas fa-desktop mr-3"></i>
+              Computer & Technology
+            </div>
+          </a>
+          <a href="#products" class="category-link d-flex align-center">
+            <div class="category-link-inner">
+              <i class="fas fa-mountain mr-3"></i>
+              Adventure
+            </div>
+          </a>
+          <a href="#products" class="category-link d-flex align-center">
+            <div class="category-link-inner">
+              <i class="fas fa-meh mr-3"></i>
+              Horror
+            </div>
+          </a>
+          <a href="#products" class="category-link d-flex align-center">
+            <div class="category-link-inner">
+              <i class="fas fa-child mr-3"></i>
+              Children Stories
+            </div>
+          </a>
+          <a href="#products" class="category-link d-flex align-center">
+            <div class="category-link-inner">
+              <i class="fas fa-search mr-3"></i>
+              Comics
+            </div>
+          </a>
+          <a href="#products" class="category-link d-flex align-center">
+            <div class="category-link-inner">
+              <i class="fas fa-journal-whills mr-3"></i>
+              Fantasy
+            </div>
+          </a>
+          <a href="#products" class="category-link d-flex align-center">
+            <div class="category-link-inner">
+              <i class="fas fa-flask mr-3"></i>
+              Science Fiction
+            </div>
+          </a>
+        </div>
+      </nav>
+      <section id="products" class="products-section">
+        <div class="products-wrapper"></div>
+      </section>
+    </main>
+
+    <div id="basket" class="basket">
+      <button class="close button" id="basket-close-button">
+        <i class="fas fa-times"></i>
+      </button>
+      <div class="basket-items"></div>
+    </div>
   </body>
 </html>
