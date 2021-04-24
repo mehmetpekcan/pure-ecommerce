@@ -20,6 +20,13 @@ const basketCloseButtonRef = document.getElementById("basket-close-button");
 let addToCartButtonsRef;
 let removeCartsButtonRef;
 
+/** Search references */
+const searchWrapperRef = document.querySelector(".hero-search");
+const searchInputRef = document.querySelector("[data-role='search-input']");
+const searchResultAreaRef = document.querySelector(
+  "[data-role='search-results']"
+);
+
 let totalBasketAmount = Number(storage.get("basketAmount")) || 0;
 let currentBasket = storage.get("basket") || [];
 
@@ -287,8 +294,79 @@ const closeBasket = () => {
   basketRef.style.width = 0;
 };
 
-/** Event registrations */
+const renderSearchProductItem = ({ id, volumeInfo, saleInfo }) => `
+  <div class="search-result-item">
+    <button 
+      class="button button-transparent d-flex align-center"
+      data-role="open-modal"
+      data-product-id=${id}
+      >
+      <div class="result-image">
+        <img
+          src=${volumeInfo.imageLinks.thumbnail}
+          alt=${volumeInfo.title}
+          width="48px"
+        />
+      </div>
+      <div class="result-info d-flex align-start f-column">
+        <h3 class="result-name">${volumeInfo.title}</h3>
+        <p class="result-author">${volumeInfo.authors[0]}</p>
+      </div>
+      <div class="result-price">
+        <p class="result-price-amount">
+          ${saleInfo.listPrice.amount.toFixed(2)} 
+          ${saleInfo.listPrice.currencyCode}
+        </p>
+      </div>
+    </button>
+  </div>
+`;
+
+const clearSearchResults = () => (searchResultAreaRef.innerHTML = "");
+
+const checkIsOutsideFromSearch = (event) => {
+  if (!event.target.closest(".hero-search")) {
+    clearSearchResults({});
+    document.removeEventListener("click", checkIsOutsideFromSearch);
+  }
+};
+
+const searchProduct = (e) => {
+  e.stopPropagation();
+  const searchKey = e.target.value.toLowerCase();
+
+  const result = Products.items.filter(({ volumeInfo }) =>
+    volumeInfo.title.toLowerCase().includes(searchKey)
+  );
+
+  if (searchKey.length > 2) {
+    if (!result.length) {
+      searchResultAreaRef.innerHTML = `<h5 class="d-flex align-center justify-center" style="height: 56px">No Result</h5>`;
+    } else {
+      const resultHTML = result.map(renderSearchProductItem).join("");
+      searchResultAreaRef.innerHTML = resultHTML;
+
+      const modalOpenButtonsRef = document.querySelectorAll(
+        "[data-role='open-modal']"
+      );
+      modalOpenButtonsRef.forEach(bindOpenModalEvent);
+    }
+  } else {
+    clearSearchResults({});
+  }
+};
+
+const bindOutsideClickHandler = (event) => {
+  searchProduct(event);
+  document.addEventListener("click", checkIsOutsideFromSearch);
+};
+
+/** Basket events registrations */
 basketOpenButtonRef.addEventListener("click", openBasket);
 basketCloseButtonRef.addEventListener("click", closeBasket);
+
+/** Search events registrations */
+searchInputRef.addEventListener("input", searchProduct);
+searchInputRef.addEventListener("focus", bindOutsideClickHandler);
 
 renderProducts();
