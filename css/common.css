@@ -49,7 +49,9 @@ h6 {
 p,
 a,
 button,
-input {
+input,
+textarea,
+label {
   font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
@@ -59,7 +61,9 @@ input,
 p,
 button,
 input,
-form {
+form,
+textarea,
+label {
   line-height: 1.25em;
   color: var(--color-black);
   letter-spacing: 0.3px;
@@ -78,6 +82,10 @@ h6 {
 
 img {
   display: block;
+}
+
+a {
+  text-decoration: none;
 }
 
 .container {
@@ -262,7 +270,10 @@ h5 {
   font-size: 16px;
 }
 
-.input {
+.input,
+.textarea {
+  resize: none;
+  width: 100%;
   font-size: 1rem;
   border: 0;
   outline: none;
@@ -305,4 +316,12 @@ h5 {
 .button-transparent {
   padding: 0;
   background-color: transparent;
+}
+
+.button:hover {
+  filter: brightness(1.1);
+}
+
+.logo {
+  color: var(--color-primary);
 }

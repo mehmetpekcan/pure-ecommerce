@@ -20,15 +20,80 @@
     <link rel="stylesheet" href="./css/custom.css" />
     <!-- Checkout CSS -->
     <link rel="stylesheet" href="./css/checkout.css" />
+    <!-- Checkout Js -->
+    <script src="./js/checkout.js" defer type="module"></script>
   </head>
   <body>
     <header>
       <div class="container d-flex align-center justify-between">
         <div class="logo d-flex align-center">
-          <p class="ml-1 font-xl font-bold">CENG 3502</p>
+          <a href="/" class="font-xl font-bold logo">CENG 3502</a>
         </div>
       </div>
     </header>
-    <main>asd</main>
+    <main>
+      <div class="container d-flex justify-between">
+        <section class="order-summary d-flex f-column">
+          <h5 class="section-title">Delivery Address</h5>
+          <div class="section address">
+            <textarea
+              style="height: 100%"
+              class="address-input textarea"
+              placeholder="Enter your delivery address.."
+              data-role="addressInput"
+            ></textarea>
+          </div>
+          <h5 class="section-title">Payment Methods</h5>
+          <div class="section payment-methods">
+            <div class="radio-buttons">
+              <div class="radio-button-item">
+                <input
+                  type="radio"
+                  name="payment-method"
+                  value="Wire Transfer"
+                  data-role="paymentMethodInput"
+                />
+                <label for="Wire Transfer">Wire Transfer</label>
+              </div>
+              <div class="radio-button-item">
+                <input
+                  type="radio"
+                  name="payment-method"
+                  value="Credit Card"
+                  data-role="paymentMethodInput"
+                />
+                <label for="Credit Card">Credit Card</label>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section class="checkout-summary">
+          <h5 class="section-title">Basket Summary</h5>
+          <div class="section basket-content"></div>
+          <h5 class="section-title">Checkout Summary</h5>
+          <div class="section checkout-content">
+            <div class="section-cell d-flex justify-between">
+              <p class="summary-title">Address:</p>
+              <p data-role="address" class="summary-content">...</p>
+            </div>
+            <div class="section-cell d-flex justify-between">
+              <p class="summary-title">Payment Method:</p>
+              <p class="summary-content" data-role="paymentMethod">...</p>
+            </div>
+            <div class="section-cell d-flex justify-between">
+              <p class="summary-title">Total Amount:</p>
+              <p
+                data-role="totalAmount"
+                class="summary-content"
+                style="color: var(--color-primary)"
+              >
+                Bla bla bla
+              </p>
+            </div>
+          </div>
+          <button class="button button-primary" style="width: 100%">Buy</button>
+        </section>
+      </div>
+    </main>
   </body>
 </html>

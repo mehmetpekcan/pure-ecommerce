@@ -1,14 +1,10 @@
 import { Products } from "./data.js";
 import { storage } from "./helpers.js";
+import Modal from "./modal.js";
 
 /** Product card references */
 const productsRef = document.getElementById("products");
 const productCardsRef = document.getElementsByClassName("product-card");
-
-/** Modal references */
-let modalRef;
-let modalCloseButtonRef;
-let modalBackdropRef;
 
 /** Basket references */
 const basketRef = document.getElementById("basket");
@@ -21,7 +17,6 @@ let addToCartButtonsRef;
 let removeCartsButtonRef;
 
 /** Search references */
-const searchWrapperRef = document.querySelector(".hero-search");
 const searchInputRef = document.querySelector("[data-role='search-input']");
 const searchResultAreaRef = document.querySelector(
   "[data-role='search-results']"
@@ -35,29 +30,12 @@ const bindAddBasketItemEvent = (ref) =>
   ref.addEventListener("click", addToBasket);
 const bindRemoveBasketItemEvent = (ref) =>
   ref.addEventListener("click", removeFromBasket);
-const bindCloseModalEvent = (ref) =>
-  ref.addEventListener("click", removeProductModal);
 
 const findProductById = (id) =>
   Products.items.find((product) => product.id === id);
-
-const removeProductModal = () => {
-  document.body.style.overflow = "initial";
-  modalRef.classList.remove("open");
-
-  /** Remove the modal, after fade effect is over */
-  setTimeout(() => document.body.removeChild(modalRef), 200);
-};
-
 const createProductModal = ({ id, volumeInfo, saleInfo }) => {
-  modalRef = document.createElement("div");
-  modalRef.classList.add("modal");
-  modalRef.innerHTML = `
-    <div class="modal-wrapper d-flex justify-between">
-      <button class="close button" id="modal-close-button">
-        <i class="fas fa-times"></i>
-      </button>
-      <div class="modal-product-image d-flex align-center">
+  Modal.create(`
+    <div class="modal-product-image d-flex align-center">
         <img
           alt=${volumeInfo.title}
           width="250px"
@@ -87,30 +65,16 @@ const createProductModal = ({ id, volumeInfo, saleInfo }) => {
           </button>
         </div>
       </div>
-    </div>
-    <div class="modal-backdrop"></div>
-  `;
-
-  document.body.appendChild(modalRef);
+    `);
 };
 
 const openProductModal = ({ dataset }) => () => {
-  document.body.style.overflow = "hidden";
-
   /** Get the active product item information */
   const { volumeInfo, saleInfo } = findProductById(dataset.productId);
 
   createProductModal({ id: dataset.productId, volumeInfo, saleInfo });
   addToCartButtonsRef = document.querySelectorAll("[data-role='add-button']");
   addToCartButtonsRef.forEach(bindAddBasketItemEvent);
-
-  /** To give fade effect, handle with the new cycle so then 0 */
-  setTimeout(() => modalRef.classList.add("open"), 0);
-
-  modalCloseButtonRef = document.getElementById("modal-close-button");
-  modalBackdropRef = document.querySelector(".modal-backdrop");
-
-  [modalCloseButtonRef, modalBackdropRef].forEach(bindCloseModalEvent);
 };
 
 const bindOpenModalEvent = async (productRef) => {
@@ -251,13 +215,20 @@ const renderBasketContent = () => {
 
     basketItemHTML = `${basketItemHTML}
       <div class="basket-footer d-flex justify-between align-center">
-        <p class="total">Total Amount: <span>${totalBasketAmount.toFixed(
+        <p class="total">Total Amount:<br/><span>${totalBasketAmount.toFixed(
           2
         )} TRY</span></p>
-        <button class="button button-primary">Go Checkout</button>
+        <a class="button button-transparent" style="text-decoration: underline" 
+          href="#products"
+          data-role="continue-shopping">Continue Shopping</a>
+        <a class="button button-primary" href="./checkout.html">Go Checkout</a>
       </div>`;
 
     basketContent.innerHTML = basketItemHTML;
+
+    document
+      .querySelector("[data-role='continue-shopping']")
+      .addEventListener("click", closeBasket);
 
     const addToBasketButtonsRef = [...document.querySelectorAll(".count-add")];
     const removeFromBasketButtonsRef = [
