@@ -130,10 +130,8 @@ const bindAddBasketItemEvent = (ref) =>
 const bindRemoveBasketItemEvent = (ref) =>
   ref.addEventListener("click", removeFromBasket);
 
-const findProductById = (id) => {
-  console.log({ id, i: Products.items });
-  return Products.items.find((product) => product.id === id);
-};
+const findProductById = (id) =>
+  Products.items.find((product) => product.id === id);
 
 const createProductModal = ({ id, volumeInfo, saleInfo }) => {
   Modal.open(`
