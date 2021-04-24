@@ -21,7 +21,7 @@ const createBasketItem = ({ count, volumeInfo, saleInfo }) =>
   <div class="basket-item d-flex align-center">
     <div class="basket-item-image">
       <img
-        src=${volumeInfo.imageLinks.thumbnail}
+        src=${volumeInfo.imageLinks.smallThumbnail}
         alt=${volumeInfo.title}
         width="75px"
       />

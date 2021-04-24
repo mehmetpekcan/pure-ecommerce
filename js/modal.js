@@ -12,9 +12,9 @@ const create = (children) => {
         <i class="fas fa-times"></i>
       </button>
       ${children}
-      </div>
-      <div class="modal-backdrop"></div>
-    `;
+    </div>
+    <div class="modal-backdrop"></div>
+  `;
   document.body.appendChild(modalRef);
   open();
 };
@@ -39,4 +39,4 @@ const open = () => {
 
 const bindEvent = (ref) => ref.addEventListener("click", remove);
 
-export default { create };
+export default { open: create, close: remove };

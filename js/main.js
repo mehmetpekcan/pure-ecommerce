@@ -16,6 +16,29 @@ const basketCloseButtonRef = document.getElementById("basket-close-button");
 let addToCartButtonsRef;
 let removeCartsButtonRef;
 
+/** New product button */
+const newProductButtonRef = document.querySelector(
+  "[data-role='new-product-button']"
+);
+let imageUploadButtonRef;
+let addNewProductButtonRef;
+let newProductInfo = {
+  volumeInfo: {
+    title: "",
+    authors: [],
+    description: "",
+    imageLinks: {
+      smallThumbnail: "",
+    },
+  },
+  saleInfo: {
+    listPrice: {
+      amount: 0,
+      currencyCode: "TRY",
+    },
+  },
+};
+
 /** Search references */
 const searchInputRef = document.querySelector("[data-role='search-input']");
 const searchResultAreaRef = document.querySelector(
@@ -25,21 +48,100 @@ const searchResultAreaRef = document.querySelector(
 let totalBasketAmount = Number(storage.get("basketAmount")) || 0;
 let currentBasket = storage.get("basket") || [];
 
+const addNewProduct = () => {
+  newProductInfo = {
+    ...newProductInfo,
+    id: `${Math.floor(Math.random() * 100)}`,
+  };
+
+  Products.items = [newProductInfo, ...Products.items];
+  renderProducts();
+  Modal.close();
+};
+
+const loadFile = (event) => {
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    const output = document.getElementById("new-product-image");
+    output.src = reader.result;
+    newProductInfo.volumeInfo.imageLinks.smallThumbnail = reader.result;
+  };
+
+  reader.readAsDataURL(event.target.files[0]);
+};
+
+const openNewProductModal = () => {
+  Modal.open(`
+    <div class="new-product">
+      <div class="d-flex">
+        <div class="new-product-image">
+          <input type="file" accept="image/*" data-role="image-upload">
+          <img id="new-product-image"/>
+        </div>
+        <div class="d-flex f-column">
+          <input id="new-product-name" type="text" class="input" placeholder="Enter the book name..." />
+          <input id="new-product-author" type="text" class="input" placeholder="Enter the book author name..." />
+          <textarea id="new-product-description" class="input" placeholder="Enter the book description..."></textarea>
+          <input id="new-product-price" type="number" class="input" placeholder="Enter the price..." />
+        </div>
+      </div>
+      <button id="add-new-product" class="button button-primary">Add to List</button>
+    </div>
+  `);
+  imageUploadButtonRef = document.querySelector("[data-role='image-upload']");
+  imageUploadButtonRef.addEventListener("change", loadFile);
+
+  addNewProductButtonRef = document.querySelector("#add-new-product");
+  addNewProductButtonRef.addEventListener("click", addNewProduct);
+
+  document
+    .querySelector("#new-product-name")
+    .addEventListener(
+      "input",
+      (e) => (newProductInfo.volumeInfo.title = e.target.value)
+    );
+
+  document
+    .querySelector("#new-product-author")
+    .addEventListener(
+      "input",
+      (e) => (newProductInfo.volumeInfo.authors = [e.target.value])
+    );
+
+  document
+    .querySelector("#new-product-price")
+    .addEventListener(
+      "input",
+      (e) => (newProductInfo.saleInfo.listPrice.amount = Number(e.target.value))
+    );
+
+  document
+    .querySelector("#new-product-description")
+    .addEventListener(
+      "input",
+      (e) => (newProductInfo.volumeInfo.description = e.target.value)
+    );
+};
+
 /** Binding event helpers */
 const bindAddBasketItemEvent = (ref) =>
   ref.addEventListener("click", addToBasket);
 const bindRemoveBasketItemEvent = (ref) =>
   ref.addEventListener("click", removeFromBasket);
 
-const findProductById = (id) =>
-  Products.items.find((product) => product.id === id);
+const findProductById = (id) => {
+  console.log({ id, i: Products.items });
+  return Products.items.find((product) => product.id === id);
+};
+
 const createProductModal = ({ id, volumeInfo, saleInfo }) => {
-  Modal.create(`
+  Modal.open(`
     <div class="modal-product-image d-flex align-center">
         <img
           alt=${volumeInfo.title}
           width="250px"
-          src=${volumeInfo.imageLinks.thumbnail}
+          src=${volumeInfo.imageLinks.smallThumbnail}
         />
       </div>
       <div class="modal-product-info">
@@ -172,7 +274,7 @@ const createBasketItem = ({ id, count, volumeInfo, saleInfo }) =>
   <div class="basket-item d-flex align-center">
     <div class="basket-item-image">
       <img
-        src=${volumeInfo.imageLinks.thumbnail}
+        src=${volumeInfo.imageLinks.smallThumbnail}
         alt=${volumeInfo.title}
         width="75px"
       />
@@ -274,7 +376,7 @@ const renderSearchProductItem = ({ id, volumeInfo, saleInfo }) => `
       >
       <div class="result-image">
         <img
-          src=${volumeInfo.imageLinks.thumbnail}
+          src=${volumeInfo.imageLinks.smallThumbnail}
           alt=${volumeInfo.title}
           width="48px"
         />
@@ -339,5 +441,7 @@ basketCloseButtonRef.addEventListener("click", closeBasket);
 /** Search events registrations */
 searchInputRef.addEventListener("input", searchProduct);
 searchInputRef.addEventListener("focus", bindOutsideClickHandler);
+
+newProductButtonRef.addEventListener("click", openNewProductModal);
 
 renderProducts();
